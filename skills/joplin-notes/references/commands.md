@@ -2,22 +2,23 @@
 
 ## Config
 
-- Default config path: `/Users/iliamikhailov/work/plugins/joplin-curl/data/joplin-config.json`
+- Helper path: set `JOPLIN_API_PY=/absolute/path/to/joplin_api.py`
+- Default config path: `data/joplin-config.json` relative to the helper script
 - Stored keys: `base_url`, `port`, `token`
 - `show-config` masks the token in terminal output.
 
 ## Commands
 
 ```bash
-python3 /Users/iliamikhailov/work/plugins/joplin-curl/scripts/joplin_api.py set-config --base-url URL --port PORT --token TOKEN
-python3 /Users/iliamikhailov/work/plugins/joplin-curl/scripts/joplin_api.py show-config
-python3 /Users/iliamikhailov/work/plugins/joplin-curl/scripts/joplin_api.py ping
-python3 /Users/iliamikhailov/work/plugins/joplin-curl/scripts/joplin_api.py list-notebooks [--limit N]
-python3 /Users/iliamikhailov/work/plugins/joplin-curl/scripts/joplin_api.py search --query TEXT [--type note|folder|tag] [--fields a,b,c] [--limit N]
-python3 /Users/iliamikhailov/work/plugins/joplin-curl/scripts/joplin_api.py get-note --note-id NOTE_ID [--fields a,b,c]
-python3 /Users/iliamikhailov/work/plugins/joplin-curl/scripts/joplin_api.py create-note --title TITLE [--body TEXT] [--parent-id NOTEBOOK_ID]
-python3 /Users/iliamikhailov/work/plugins/joplin-curl/scripts/joplin_api.py update-note --note-id NOTE_ID [--title TITLE] [--body TEXT] [--parent-id NOTEBOOK_ID]
-python3 /Users/iliamikhailov/work/plugins/joplin-curl/scripts/joplin_api.py request --method METHOD --path /endpoint [--query a=b] [--data '{"x":"y"}']
+python3 "$JOPLIN_API_PY" set-config --base-url URL --port PORT --token TOKEN
+python3 "$JOPLIN_API_PY" show-config
+python3 "$JOPLIN_API_PY" ping
+python3 "$JOPLIN_API_PY" list-notebooks [--limit N]
+python3 "$JOPLIN_API_PY" search --query TEXT [--type note|folder|tag] [--fields a,b,c] [--limit N]
+python3 "$JOPLIN_API_PY" get-note --note-id NOTE_ID [--fields a,b,c]
+python3 "$JOPLIN_API_PY" create-note --title TITLE [--body TEXT] [--parent-id NOTEBOOK_ID]
+python3 "$JOPLIN_API_PY" update-note --note-id NOTE_ID [--title TITLE] [--body TEXT] [--parent-id NOTEBOOK_ID]
+python3 "$JOPLIN_API_PY" request --method METHOD --path /endpoint [--query a=b] [--data '{"x":"y"}']
 ```
 
 ## Notes

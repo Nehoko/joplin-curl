@@ -1,7 +1,7 @@
 {
   "name": "joplin-curl",
-  "version": "0.1.0",
-  "description": "Persist Joplin clipper settings once and let Codex inspect or update Joplin notes through curl-backed helper commands.",
+  "version": "0.2.0",
+  "description": "Persist Joplin clipper settings once and let Codex inspect or update Joplin notes, tags, and Joplin-backed LLM wiki content through curl-backed helper commands.",
   "author": {
     "name": "Ilia Mikhailov",
     "email": "eliah.mikhailov@gmail.com",
@@ -19,8 +19,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Joplin Curl",
-    "shortDescription": "Reuse saved Joplin clipper settings and operate on local notes via curl-backed helpers",
-    "longDescription": "Use Joplin Curl when Codex should read, search, create, or update notes in a local Joplin client. The plugin stores the clipper base URL, port, and token once in a local config file, then reuses that config through a helper CLI that executes curl requests against the Joplin Data API.",
+    "shortDescription": "Reuse saved Joplin clipper settings for notes and Joplin LLM wiki workflows",
+    "longDescription": "Use Joplin Curl when Codex should read, search, create, or update notes in a local Joplin client, or when it should scaffold and maintain a Joplin-backed LLM wiki. The plugin stores the clipper base URL, port, and token once in a local config file, then reuses that config through a helper CLI that executes curl requests against the Joplin Data API.",
     "developerName": "Ilia Mikhailov",
     "category": "Productivity",
     "capabilities": [
@@ -34,7 +34,7 @@
     "defaultPrompt": [
       "Set up my Joplin clipper connection and reuse it for future note tasks.",
       "Find a Joplin note by title and update its body.",
-      "Create a new Joplin note in a selected notebook."
+      "Create a Joplin-based LLM wiki scaffold and maintain its notes."
     ],
     "brandColor": "#2F6FEB",
     "screenshots": []

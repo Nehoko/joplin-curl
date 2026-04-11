@@ -1,0 +1,4 @@
+interface:
+  display_name: "Joplin LLM Wiki"
+  short_description: "Operate tagged LLM wiki workflows from the Schema note"
+  default_prompt: "Use $joplin-llm-wiki to maintain a Joplin-based LLM wiki. Read LLM Wiki/Ops/Schema first when it exists, then follow it while updating notes and tags."
