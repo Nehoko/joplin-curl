@@ -1,0 +1,42 @@
+{
+  "name": "joplin-curl",
+  "version": "0.1.0",
+  "description": "Persist Joplin clipper settings once and let Codex inspect or update Joplin notes through curl-backed helper commands.",
+  "author": {
+    "name": "Ilia Mikhailov",
+    "email": "eliah.mikhailov@gmail.com",
+    "url": "https://joplinapp.org/"
+  },
+  "homepage": "https://joplinapp.org/help/api/references/rest_api/",
+  "repository": "https://github.com/Nehoko/joplin-curl",
+  "license": "MIT",
+  "keywords": [
+    "joplin",
+    "curl",
+    "notes",
+    "local-api"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Joplin Curl",
+    "shortDescription": "Reuse saved Joplin clipper settings and operate on local notes via curl-backed helpers",
+    "longDescription": "Use Joplin Curl when Codex should read, search, create, or update notes in a local Joplin client. The plugin stores the clipper base URL, port, and token once in a local config file, then reuses that config through a helper CLI that executes curl requests against the Joplin Data API.",
+    "developerName": "Ilia Mikhailov",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://joplinapp.org/help/api/references/rest_api/",
+    "privacyPolicyURL": "https://joplinapp.org/privacy/",
+    "termsOfServiceURL": "https://joplinapp.org/help/api/references/rest_api/",
+    "defaultPrompt": [
+      "Set up my Joplin clipper connection and reuse it for future note tasks.",
+      "Find a Joplin note by title and update its body.",
+      "Create a new Joplin note in a selected notebook."
+    ],
+    "brandColor": "#2F6FEB",
+    "screenshots": []
+  }
+}

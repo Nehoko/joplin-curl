@@ -1,0 +1,4 @@
+interface:
+  display_name: "Joplin Notes"
+  short_description: "Use Joplin via local MCP tools"
+  default_prompt: "Use $joplin-notes to inspect or update notes in my local Joplin client."
