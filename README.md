@@ -1,35 +1,62 @@
 # joplin-curl
 
-Codex plugin for working with a local Joplin desktop client through the Joplin Data API.
+Codex plugin for local Joplin notes, tags, and Joplin-backed LLM wiki workflows.
 
-## What it includes
+## What it does
 
-- plugin manifest in `.codex-plugin/plugin.json`
-- bundled skills in `skills/`
-- curl-backed helper CLI in `scripts/joplin_api.py`
-- local config storage in `data/joplin-config.json`
+- stores Joplin Web Clipper connection once in local JSON config
+- exposes small `curl`-backed helper CLI for note and notebook tasks
+- bundles Codex skills for direct Joplin work and `LLM Wiki` maintenance
+- supports local Codex marketplace install flow like `caveman`
 
-## Included skills
+## Install
 
-- `joplin-notes`: connect to the local Joplin clipper API and perform direct note, notebook, tag, and generic API tasks.
-- `joplin-llm-wiki`: maintain a Joplin-backed LLM wiki with schema-first behavior, selective tagging, source ingest, and lint workflows.
-- `joplin-llm-wiki-create`: scaffold the notebook tree and starter notes for a fresh Joplin LLM wiki.
-
-## Setup
-
-Set the helper path for skill command examples:
+### Codex local marketplace
 
 ```bash
-export JOPLIN_API_PY=/absolute/path/to/joplin_api.py
+git clone https://github.com/Nehoko/joplin-curl.git
+cd joplin-curl
 ```
 
-Inside this repository, that path is:
+Open Codex in cloned repo, then:
+
+1. open `/plugins`
+2. search `Joplin Curl`
+3. install local plugin from marketplace
+
+Repo ships local marketplace metadata in `.agents/plugins/marketplace.json` and plugin bundle in `plugins/joplin-curl/`.
+
+## Configure Joplin
+
+### 1. Enable Web Clipper in Joplin desktop
+
+Official docs:
+
+- [Joplin Web Clipper](https://joplinapp.org/help/apps/clipper/)
+- [Joplin Data API](https://joplinapp.org/help/api/references/rest_api/)
+
+In Joplin desktop:
+
+1. open `Configuration`
+2. open `Web Clipper`
+3. enable clipper service
+4. copy auth token
+
+### 2. Point helper at bundled CLI
+
+From repo root:
 
 ```bash
 export JOPLIN_API_PY="$(pwd)/scripts/joplin_api.py"
 ```
 
-Save the Joplin clipper connection once:
+If you want plugin-bundle path instead:
+
+```bash
+export JOPLIN_API_PY="$(pwd)/plugins/joplin-curl/scripts/joplin_api.py"
+```
+
+### 3. Save connection settings once
 
 ```bash
 python3 "$JOPLIN_API_PY" set-config \
@@ -38,17 +65,18 @@ python3 "$JOPLIN_API_PY" set-config \
   --token YOUR_TOKEN
 ```
 
-Check the stored config:
+### 4. Verify
 
 ```bash
 python3 "$JOPLIN_API_PY" show-config
-```
-
-Verify connectivity:
-
-```bash
 python3 "$JOPLIN_API_PY" ping
 ```
+
+## Included skills
+
+- `joplin-notes` - search, read, create, update, and organize Joplin notes through helper CLI
+- `joplin-llm-wiki` - maintain `LLM Wiki` notebooks with schema-first workflow
+- `joplin-llm-wiki-create` - scaffold fresh Joplin wiki notebook tree and starter notes
 
 ## Common commands
 
@@ -58,11 +86,20 @@ python3 "$JOPLIN_API_PY" search --query "weekly review"
 python3 "$JOPLIN_API_PY" get-note --note-id NOTE_ID
 python3 "$JOPLIN_API_PY" create-note --title "Daily log" --body "..."
 python3 "$JOPLIN_API_PY" update-note --note-id NOTE_ID --title "Updated"
+python3 "$JOPLIN_API_PY" request --method GET --path /tags --query fields=id,title
 ```
+
+## Repo layout
+
+- `.codex-plugin/plugin.json` - source plugin manifest
+- `.agents/plugins/marketplace.json` - local Codex marketplace entry
+- `plugins/joplin-curl/` - installable local plugin bundle for Codex
+- `scripts/joplin_api.py` - helper CLI
+- `skills/` - source skill docs
+- `data/joplin-config.json` - local saved clipper config, ignored by git
 
 ## Notes
 
-- all bundled skills assume `JOPLIN_API_PY` points at the helper script
-- local config is stored in `data/joplin-config.json` relative to `joplin_api.py`
-- `data/` is ignored so tokens do not get committed
-- the plugin repository is the source of truth for all Joplin-related skills
+- plugin needs running local Joplin desktop app with Web Clipper enabled
+- helper appends token as query parameter because Joplin Data API accepts auth that way
+- `request` is fallback for API paths not covered by dedicated helper commands

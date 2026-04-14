@@ -1,0 +1,20 @@
+{
+  "name": "joplin-curl-repo",
+  "interface": {
+    "displayName": "Joplin Curl Repo"
+  },
+  "plugins": [
+    {
+      "name": "joplin-curl",
+      "source": {
+        "source": "local",
+        "path": "./plugins/joplin-curl"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

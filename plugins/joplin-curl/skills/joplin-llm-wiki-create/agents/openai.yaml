@@ -1,0 +1,4 @@
+interface:
+  display_name: "Joplin LLM Wiki Create"
+  short_description: "Create Joplin LLM wiki scaffolds"
+  default_prompt: "Use $joplin-llm-wiki-create to create a Joplin-based LLM wiki scaffold."
