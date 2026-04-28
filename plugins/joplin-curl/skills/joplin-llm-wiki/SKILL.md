@@ -32,7 +32,12 @@ python3 "$JOPLIN_API_PY" list-notebooks
 python3 "$JOPLIN_API_PY" search --query "LLM Wiki" --fields id,parent_id,title
 ```
 
-4. Read `LLM Wiki/Ops/Schema` before acting so task behavior follows the wiki's current operating rules. If the note is missing, continue with this skill's defaults and treat creating or repairing `Schema` as follow-up maintenance.
+4. Read `LLM Wiki/Ops/Schema` before acting so task behavior follows the wiki's current operating rules. Use `search` to find the note ID, then fetch it with `get-note --note-id`; there is no `read-note` helper and `get-note` does not accept a positional ID. If the note is missing, continue with this skill's defaults and treat creating or repairing `Schema` as follow-up maintenance.
+
+```bash
+python3 "$JOPLIN_API_PY" search --query "Schema" --fields id,parent_id,title
+python3 "$JOPLIN_API_PY" get-note --note-id NOTE_ID --fields id,title,body
+```
 
 5. Use the smallest API call that completes the task. Prefer helper subcommands. Use `request` when the helper surface is missing a needed notebook or tag operation.
 
@@ -99,7 +104,7 @@ python3 "$JOPLIN_API_PY" request \
 ### Ingest a source
 
 1. Find or create the source note under `Raw Sources`.
-2. Read the source note.
+2. Read the source note with `get-note --note-id NOTE_ID --fields id,title,body`.
 3. Extract claims, entities, concepts, contradictions, and follow-up questions.
 4. Update relevant notes in `Wiki`. Add or update tags on created or materially changed pages when useful.
 5. Update `index`.
@@ -107,9 +112,9 @@ python3 "$JOPLIN_API_PY" request \
 
 ### Answer from the wiki
 
-1. Read `index` first.
+1. Read `index` first with `get-note --note-id NOTE_ID --fields id,title,body`.
 2. Search relevant wiki notes.
-3. Read only the notes needed.
+3. Read only the notes needed with `get-note --note-id NOTE_ID --fields id,title,body`.
 4. Answer with citations or Joplin note links when available.
 5. Save durable analyses back into `Wiki` if the result should persist.
 
