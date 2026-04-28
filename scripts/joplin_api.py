@@ -11,6 +11,7 @@ from urllib.parse import urlencode
 
 PLUGIN_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_CONFIG_PATH = PLUGIN_ROOT / "data" / "joplin-config.json"
+DEFAULT_JOPLIN_BIN = "joplin"
 
 
 def fail(message: str) -> None:
@@ -66,6 +67,18 @@ def run_curl(method: str, url: str, data: Optional[str] = None) -> str:
     if data is not None:
         command.extend(["-H", "Content-Type: application/json", "--data", data])
 
+    result = subprocess.run(command, capture_output=True, text=True)
+    if result.returncode != 0:
+        if result.stdout.strip():
+            print(result.stdout.strip(), file=sys.stderr)
+        if result.stderr.strip():
+            print(result.stderr.strip(), file=sys.stderr)
+        raise SystemExit(result.returncode)
+
+    return result.stdout
+
+
+def run_joplin(command: List[str]) -> str:
     result = subprocess.run(command, capture_output=True, text=True)
     if result.returncode != 0:
         if result.stdout.strip():
@@ -177,13 +190,31 @@ def cmd_request(args: argparse.Namespace) -> None:
     print_json(run_curl(args.method, url, data))
 
 
+def cmd_check_terminal(args: argparse.Namespace) -> None:
+    print(run_joplin([args.joplin_bin, "version"]).strip())
+
+
+def cmd_terminal(args: argparse.Namespace) -> None:
+    joplin_args = args.joplin_args
+    if joplin_args and joplin_args[0] == "--":
+        joplin_args = joplin_args[1:]
+    if not joplin_args:
+        fail("Provide Joplin Terminal arguments after `terminal --`, for example `terminal -- mknote Title`.")
+    print(run_joplin([args.joplin_bin, *joplin_args]).rstrip())
+
+
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Joplin Data API helper backed by curl.")
+    parser = argparse.ArgumentParser(description="Joplin helper backed by curl or one-shot Joplin Terminal commands.")
     parser.add_argument(
         "--config",
         type=Path,
         default=DEFAULT_CONFIG_PATH,
         help=f"Config file path. Defaults to {DEFAULT_CONFIG_PATH}",
+    )
+    parser.add_argument(
+        "--joplin-bin",
+        default=DEFAULT_JOPLIN_BIN,
+        help="Joplin Terminal executable for terminal-backed commands. Defaults to `joplin`.",
     )
 
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -236,6 +267,13 @@ def build_parser() -> argparse.ArgumentParser:
     request.add_argument("--data", help="Inline JSON request body")
     request.add_argument("--data-file", help="Path to a JSON request body file")
     request.set_defaults(func=cmd_request)
+
+    check_terminal = subparsers.add_parser("check-terminal", help="Check that Joplin Terminal CLI is available.")
+    check_terminal.set_defaults(func=cmd_check_terminal)
+
+    terminal = subparsers.add_parser("terminal", help="Run a one-shot Joplin Terminal command.")
+    terminal.add_argument("joplin_args", nargs=argparse.REMAINDER, help="Arguments passed to the Joplin Terminal executable")
+    terminal.set_defaults(func=cmd_terminal)
 
     return parser
 

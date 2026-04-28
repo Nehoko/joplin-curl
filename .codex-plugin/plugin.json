@@ -1,7 +1,7 @@
 {
   "name": "joplin-curl",
   "version": "0.2.0",
-  "description": "Persist Joplin clipper settings once and let Codex read, search, create, update, and move Joplin notes, plus use generic curl-backed API requests for notebooks, tags, and Joplin-backed LLM wiki content.",
+  "description": "Persist Joplin clipper settings once for Data API tasks, or run one-shot Joplin Terminal commands for local note work without keeping Desktop Web Clipper open.",
   "author": {
     "name": "Ilia Mikhailov",
     "email": "eliah.mikhailov@gmail.com",
@@ -23,8 +23,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Joplin Curl",
-    "shortDescription": "Reuse saved Joplin clipper settings for notes, search, and Joplin LLM wiki workflows",
-    "longDescription": "Use Joplin Curl when Codex should read, search, create, update, or move notes in a local Joplin client; list or search notebooks; search tags; make generic Joplin API requests for unsupported endpoints; or scaffold and maintain a Joplin-backed LLM wiki. The plugin stores the clipper base URL, port, and token once in a local config file, then reuses that config through a helper CLI that executes curl requests against the Joplin Data API.",
+    "shortDescription": "Use Joplin via saved Data API config or one-shot Terminal commands",
+    "longDescription": "Use Joplin Curl when Codex should read, search, create, update, or move notes in a local Joplin client; list or search notebooks; search tags; make generic Joplin API requests for unsupported endpoints; run one-shot Joplin Terminal commands without keeping Desktop Web Clipper open; or scaffold and maintain a Joplin-backed LLM wiki. The plugin stores the clipper base URL, port, and token once for Data API mode, and can also invoke the Joplin Terminal executable for shell-mode note operations.",
     "developerName": "Ilia Mikhailov",
     "category": "Productivity",
     "capabilities": [

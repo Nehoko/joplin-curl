@@ -1,6 +1,6 @@
 ---
 name: joplin-notes
-description: Use this skill when Codex needs to read, search, create, update, or move notes in a local Joplin desktop client through the Joplin Data API. Trigger when the user asks to work with Joplin notes, list or search notebooks, search tags, make a generic Joplin API request for unsupported endpoints such as todos or tag changes, or persist and reuse a local Joplin base URL, port, and token across future tasks.
+description: Use this skill when Codex needs to read, search, create, update, or move notes in Joplin through the local Data API or one-shot Joplin Terminal commands. Trigger when the user asks to work with Joplin notes, list or search notebooks, search tags, make a generic Joplin API request for unsupported endpoints such as todos or tag changes, persist and reuse a local Joplin base URL, port, and token, or use Joplin without keeping Desktop Web Clipper open.
 ---
 
 # Joplin Notes
@@ -8,6 +8,7 @@ description: Use this skill when Codex needs to read, search, create, update, or
 ## Overview
 
 Use the bundled helper CLI to store Joplin clipper connection settings once, then reuse them for note, notebook, search, and generic Joplin API tasks.
+When the user does not want to keep Joplin Desktop and Web Clipper open, use Joplin Terminal mode for one-shot CLI commands.
 Set `JOPLIN_API_PY` to the local path of `joplin_api.py` before using the command examples below.
 Keep requests minimal. Prefer the smallest command or API call that completes the task.
 
@@ -34,7 +35,8 @@ python3 "$JOPLIN_API_PY" set-config \
 python3 "$JOPLIN_API_PY" ping
 ```
 
-4. Run the narrowest helper command for the task. Use `request` only when a dedicated command is missing, such as for folder creation, tag attachment, or todo-specific fields.
+4. Run the narrowest helper command for the task. Use `request` only when a dedicated API command is missing, such as for folder creation, tag attachment, or todo-specific fields.
+5. Use Terminal mode instead of Data API mode when the task should run without a running Joplin Desktop Web Clipper service.
 
 ## Common Commands
 
@@ -94,10 +96,33 @@ python3 "$JOPLIN_API_PY" request \
   --query fields=id,title
 ```
 
+Check Joplin Terminal:
+
+```bash
+python3 "$JOPLIN_API_PY" check-terminal
+```
+
+Run a one-shot Joplin Terminal command:
+
+```bash
+python3 "$JOPLIN_API_PY" terminal -- mknote "Daily log"
+```
+
+Terminal CRUD examples:
+
+```bash
+python3 "$JOPLIN_API_PY" terminal -- cat NOTE_ID
+python3 "$JOPLIN_API_PY" terminal -- set NOTE_ID title "Updated title"
+python3 "$JOPLIN_API_PY" terminal -- mv NOTE_ID "Archive"
+python3 "$JOPLIN_API_PY" terminal -- rmnote -f NOTE_ID
+```
+
 ## Rules
 
 - Use the stored config by default. Do not ask for host, port, or token again unless config is missing or the user wants to edit it.
 - Prefer helper subcommands over raw `request`.
 - Use `search` or `list-notebooks` first when the user names a note or notebook by title instead of ID.
 - Confirm `ping` succeeds before create, update, or delete operations.
+- For Terminal mode, confirm `check-terminal` succeeds before create, update, move, or delete operations.
+- Pass `--joplin-bin /path/to/joplin` before the subcommand when `joplin` is not on `PATH`.
 - Read [`references/commands.md`](./references/commands.md) for the command surface and config path details.
