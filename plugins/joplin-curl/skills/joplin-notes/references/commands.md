@@ -3,7 +3,7 @@
 ## Config
 
 - Helper path: set `JOPLIN_API_PY=/absolute/path/to/joplin_api.py`
-- Default config path: `data/joplin-config.json` relative to the helper script
+- Default config path: `data/joplin-config.json` under the plugin root containing the helper's `scripts/` directory
 - Stored keys: `base_url`, `port`, `token`
 - `show-config` masks the token in terminal output.
 
@@ -18,7 +18,7 @@ python3 "$JOPLIN_API_PY" search --query TEXT [--type note|folder|tag] [--fields 
 python3 "$JOPLIN_API_PY" get-note --note-id NOTE_ID [--fields a,b,c]
 python3 "$JOPLIN_API_PY" create-note --title TITLE [--body TEXT] [--parent-id NOTEBOOK_ID]
 python3 "$JOPLIN_API_PY" update-note --note-id NOTE_ID [--title TITLE] [--body TEXT] [--parent-id NOTEBOOK_ID]
-python3 "$JOPLIN_API_PY" request --method METHOD --path /endpoint [--query a=b] [--data '{"x":"y"}']
+python3 "$JOPLIN_API_PY" request --method GET|POST|PUT|DELETE --path /endpoint [--query a=b] [--data '{"x":"y"}' | --data-file body.json]
 ```
 
 ## Notes

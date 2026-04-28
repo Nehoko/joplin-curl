@@ -1,11 +1,11 @@
 # joplin-curl
 
-Codex plugin for local Joplin notes, tags, and Joplin-backed LLM wiki workflows.
+Codex plugin for local Joplin notes, notebook search, tag search, generic Joplin API calls, and Joplin-backed LLM wiki workflows.
 
 ## What it does
 
 - stores Joplin Web Clipper connection once in local JSON config
-- exposes small `curl`-backed helper CLI for note and notebook tasks
+- exposes small `curl`-backed helper CLI for note, notebook, search, and generic Joplin API tasks
 - bundles Codex skills for direct Joplin work and `LLM Wiki` maintenance
 - supports local Codex marketplace install flow like `caveman`
 
@@ -74,7 +74,7 @@ python3 "$JOPLIN_API_PY" ping
 
 ## Included skills
 
-- `joplin-notes` - search, read, create, update, and organize Joplin notes through helper CLI
+- `joplin-notes` - search, read, create, update, and move Joplin notes, list or search notebooks, search tags, and fall back to generic API requests
 - `joplin-llm-wiki` - maintain `LLM Wiki` notebooks with schema-first workflow
 - `joplin-llm-wiki-create` - scaffold fresh Joplin wiki notebook tree and starter notes
 

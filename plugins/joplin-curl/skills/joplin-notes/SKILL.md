@@ -1,13 +1,13 @@
 ---
 name: joplin-notes
-description: Use this skill when Codex needs to read, search, create, update, or organize notes in a local Joplin desktop client through the Joplin Data API. Trigger when the user asks to work with Joplin notes, notebooks, tags, todos, clipper API, or to persist and reuse a local Joplin host, port, and token across future tasks.
+description: Use this skill when Codex needs to read, search, create, update, or move notes in a local Joplin desktop client through the Joplin Data API. Trigger when the user asks to work with Joplin notes, list or search notebooks, search tags, make a generic Joplin API request for unsupported endpoints such as todos or tag changes, or persist and reuse a local Joplin base URL, port, and token across future tasks.
 ---
 
 # Joplin Notes
 
 ## Overview
 
-Use the bundled helper CLI to store Joplin clipper connection settings once, then reuse them for note and notebook tasks.
+Use the bundled helper CLI to store Joplin clipper connection settings once, then reuse them for note, notebook, search, and generic Joplin API tasks.
 Set `JOPLIN_API_PY` to the local path of `joplin_api.py` before using the command examples below.
 Keep requests minimal. Prefer the smallest command or API call that completes the task.
 
@@ -34,7 +34,7 @@ python3 "$JOPLIN_API_PY" set-config \
 python3 "$JOPLIN_API_PY" ping
 ```
 
-4. Run the narrowest helper command for the task. Use `request` only when a dedicated command is missing.
+4. Run the narrowest helper command for the task. Use `request` only when a dedicated command is missing, such as for folder creation, tag attachment, or todo-specific fields.
 
 ## Common Commands
 
@@ -49,6 +49,15 @@ Search notes:
 ```bash
 python3 "$JOPLIN_API_PY" search \
   --query "weekly review" \
+  --fields id,parent_id,title
+```
+
+Search notebooks or tags:
+
+```bash
+python3 "$JOPLIN_API_PY" search \
+  --query "project" \
+  --type folder \
   --fields id,parent_id,title
 ```
 
